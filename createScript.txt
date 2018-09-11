@@ -2,8 +2,8 @@
 
 CREATE TABLE accounts (
 	accountID INTEGER,
-	user VARCHAR(30) NOT NULL,
-	password VARCHAR(30) NOT NULL
+	username VARCHAR(30) NOT NULL,
+	password VARCHAR(30)
 );
 
 --create tables without keys
@@ -36,29 +36,29 @@ CREATE TABLE globalItems (
 CREATE TABLE tempItems (
 	tItemID INTEGER,
 	sessionID INTEGER NOT NULL,
-	sItemName VARCHAR(30) NOT NULL,
-	sItemValue INTEGER NOT NULL,
-	sItemDefault INTEGER
+	tItemName VARCHAR(30) NOT NULL,
+	tItemValue INTEGER NOT NULL,
+	tItemDefault INTEGER
 );
 
 --create PKs and name them
 ALTER TABLE accounts ADD CONSTRAINT accountsPK PRIMARY KEY (accountID);
 ALTER TABLE characters ADD CONSTRAINT charactersPK PRIMARY KEY (characterID);
-ALTER TABLE sessions ADD CONSTRAINT sessionsPK PRIMARY KEY sessionID);
-ALTER TABLE globalItems ADD CONSTRAINT gItemsPK PRIMARY KEY gItemID);
+ALTER TABLE sessions ADD CONSTRAINT sessionsPK PRIMARY KEY (sessionID);
+ALTER TABLE globalItems ADD CONSTRAINT gItemsPK PRIMARY KEY (gItemID);
 ALTER TABLE tempItems ADD CONSTRAINT tItemsPK PRIMARY KEY (tItemID);
 
 --add unique-constraints
-ALTER TABLE accounts ADD CONSTRAINT accountUnique UNIQUE (user);
+ALTER TABLE accounts ADD CONSTRAINT accountUnique UNIQUE (username);
 
 --create FKs and name them
 ALTER TABLE characters ADD CONSTRAINT characterFK1 FOREIGN KEY (accountID) REFERENCES accounts (accountID);
 ALTER TABLE characters ADD CONSTRAINT characterFK2 FOREIGN KEY (gItemID) REFERENCES globalItems (gItemID);
 ALTER TABLE characters ADD CONSTRAINT characterFK3 FOREIGN KEY (sessionID) REFERENCES sessions (sessionID);
 ALTER TABLE sessions ADD CONSTRAINT sessionFK1 FOREIGN KEY (characterID) REFERENCES characters (characterID);
-ALTER TABLE sessions ADD CONSTRAINT sessionFK2 FOREIGN KEY (tItemID) REFERENCES items (tItemID);
+ALTER TABLE sessions ADD CONSTRAINT sessionFK2 FOREIGN KEY (tItemID) REFERENCES tempItems (tItemID);
 ALTER TABLE globalItems ADD CONSTRAINT gItemFK1 FOREIGN KEY (characterID) REFERENCES characters (characterID);
-ALTER TABLE tempItems ADD CONSTRAINT tItemFK1 FOREIGN KEY (characterID) REFERENCES characters (characterID);
+ALTER TABLE tempItems ADD CONSTRAINT tItemFK1 FOREIGN KEY (sessionID) REFERENCES sessions (sessionID);
 
 --fill in default values
 ALTER TABLE characters MODIFY (name DEFAULT 'Neuer Charakter');

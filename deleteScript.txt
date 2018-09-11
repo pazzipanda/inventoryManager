@@ -1,6 +1,6 @@
 --start by deleting data from tables with dependencies
 DELETE FROM globalItems;
-DELETE FROM temporaryItems;
+DELETE FROM tempItems;
 DELETE FROM sessions;
 DELETE FROM characters;
 
@@ -28,7 +28,7 @@ ALTER TABLE accounts DROP CONSTRAINT accountsPK;
 
 --delete tables with dependencies
 DROP TABLE globalItems;
-DROP TABLE temporaryItems;
+DROP TABLE tempItems;
 DROP TABLE sessions;
 DROP TABLE characters;
 
