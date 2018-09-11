@@ -41,6 +41,13 @@ CREATE TABLE tempItems (
 	tItemDefault INTEGER
 );
 
+--create sequences
+CREATE SEQUENCE accountID_sequence START WITH 1000;
+CREATE SEQUENCE characterID_sequence START WITH 1000;
+CREATE SEQUENCE sessionID_sequence START WITH 1000;
+CREATE SEQUENCE gItemID_sequence START WITH 1000;
+CREATE SEQUENCE tItemID_sequence START WITH 1000;
+
 --create PKs and name them
 ALTER TABLE accounts ADD CONSTRAINT accountsPK PRIMARY KEY (accountID);
 ALTER TABLE characters ADD CONSTRAINT charactersPK PRIMARY KEY (characterID);

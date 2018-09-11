@@ -26,6 +26,13 @@ ALTER TABLE sessions DROP CONSTRAINT sessionsPK;
 ALTER TABLE characters DROP CONSTRAINT charactersPK;
 ALTER TABLE accounts DROP CONSTRAINT accountsPK;
 
+--delete sequences
+DROP SEQUENCE accountID_sequence;
+DROP SEQUENCE characterID_sequence;
+DROP SEQUENCE sessionID_sequence;
+DROP SEQUENCE gItemID_sequence;
+DROP SEQUENCE tItemID_sequence;
+
 --delete tables with dependencies
 DROP TABLE globalItems;
 DROP TABLE tempItems;

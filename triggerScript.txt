@@ -1,0 +1,59 @@
+--create trigger for inserting account
+
+CREATE OR REPLACE trigger NEWACCOUNT
+	before insert on ACCOUNTS
+	for each row
+begin
+	if :NEW.ACCOUNTID is null then
+		select ACCOUNTID_SEQUENCE.nextval into :NEW.ACCOUNTID from dual;
+	end if;
+end;
+/
+
+--create trigger for inserting character
+
+CREATE OR REPLACE trigger NEWCHARACTER
+	before insert on CHARACTERS
+	for each row
+begin
+	if :NEW.CHARACTERID is null then
+		select CHARACTERID_SEQUENCE.nextval into :NEW.CHARACTERID from dual;
+	end if;
+end;
+/
+
+--create trigger for inserting session
+
+CREATE OR REPLACE trigger NEWSESSION
+	before insert on SESSIONS
+	for each row
+begin
+	if :NEW.SESSIONID is null then
+		select SESSIONID_SEQUENCE.nextval into :NEW.SESSIONID from dual;
+	end if;
+end;
+/
+
+--create trigger for inserting account
+
+CREATE OR REPLACE trigger NEWGITEM
+	before insert on GLOBALITEMS
+	for each row
+begin
+	if :NEW.GITEMID is null then
+		select GITEMID_SEQUENCE.nextval into :NEW.GITEMID from dual;
+	end if;
+end;
+/
+
+--create trigger for inserting account
+
+CREATE OR REPLACE trigger NEWACCOUNT
+	before insert on ACCOUNTS
+	for each row
+begin
+	if:NEW.ACCOUNTID is null then
+		select ACCOUNTID_SEQUENCE.nextval into :NEW.ACCOUNTID from dual;
+	end if;
+end;
+/
