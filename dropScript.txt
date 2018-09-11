@@ -1,0 +1,35 @@
+
+--drop all FKs 
+ALTER TABLE tempItems DROP CONSTRAINT tItemFK1;
+ALTER TABLE globalItems DROP CONSTRAINT gItemFK1;
+ALTER TABLE sessions DROP CONSTRAINT sessionFK2;
+ALTER TABLE sessions DROP CONSTRAINT sessionFK1;
+ALTER TABLE characters DROP CONSTRAINT characterFK3;
+ALTER TABLE characters DROP CONSTRAINT characterFK2;
+ALTER TABLE characters DROP CONSTRAINT characterFK1;
+
+--drop all Uniqe Constraints
+ALTER TABLE accounts DROP CONSTRAINT accountUnique;
+
+--drop all PKs
+ALTER TABLE globalItems DROP CONSTRAINT gItemsPK;
+ALTER TABLE tempItems DROP CONSTRAINT tItemsPK;
+ALTER TABLE sessions DROP CONSTRAINT sessionsPK;
+ALTER TABLE characters DROP CONSTRAINT charactersPK;
+ALTER TABLE accounts DROP CONSTRAINT accountsPK;
+
+--drop sequences
+DROP SEQUENCE accountID_sequence;
+DROP SEQUENCE characterID_sequence;
+DROP SEQUENCE sessionID_sequence;
+DROP SEQUENCE gItemID_sequence;
+DROP SEQUENCE tItemID_sequence;
+
+--delete tables with dependencies
+DROP TABLE globalItems;
+DROP TABLE tempItems;
+DROP TABLE sessions;
+DROP TABLE characters;
+
+--delte tables without dependencies
+DROP TABLE accounts;
