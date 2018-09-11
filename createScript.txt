@@ -1,0 +1,69 @@
+--create tables without dependencies
+
+CREATE TABLE accounts (
+	accountID INTEGER,
+	user VARCHAR(30) NOT NULL,
+	password VARCHAR(30) NOT NULL
+);
+
+--create tables without keys
+
+CREATE TABLE characters (
+	characterID INTEGER,
+	accountID INTEGER NOT NULL,
+	gItemID INTEGER,
+	sessionID INTEGER,
+	name VARCHAR(40) NOT NULL,
+	game VARCHAR(30)
+);
+
+CREATE TABLE sessions (
+	sessionID INTEGER,
+	characterID INTEGER NOT NULL,
+	tItemID INTEGER,
+	name VARCHAR(50) NOT NULL,
+	notes VARCHAR(300)
+);
+
+CREATE TABLE globalItems (
+	gItemID INTEGER,
+	characterID INTEGER NOT NULL,
+	gItemName VARCHAR(30) NOT NULL,
+	gItemValue INTEGER NOT NULL,
+	gItemDefault INTEGER
+);
+
+CREATE TABLE tempItems (
+	tItemID INTEGER,
+	sessionID INTEGER NOT NULL,
+	sItemName VARCHAR(30) NOT NULL,
+	sItemValue INTEGER NOT NULL,
+	sItemDefault INTEGER
+);
+
+--create PKs and name them
+ALTER TABLE accounts ADD CONSTRAINT accountsPK PRIMARY KEY (accountID);
+ALTER TABLE characters ADD CONSTRAINT charactersPK PRIMARY KEY (characterID);
+ALTER TABLE sessions ADD CONSTRAINT sessionsPK PRIMARY KEY sessionID);
+ALTER TABLE globalItems ADD CONSTRAINT gItemsPK PRIMARY KEY gItemID);
+ALTER TABLE tempItems ADD CONSTRAINT tItemsPK PRIMARY KEY (tItemID);
+
+--add unique-constraints
+ALTER TABLE accounts ADD CONSTRAINT accountUnique UNIQUE (user);
+
+--create FKs and name them
+ALTER TABLE characters ADD CONSTRAINT characterFK1 FOREIGN KEY (accountID) REFERENCES accounts (accountID);
+ALTER TABLE characters ADD CONSTRAINT characterFK2 FOREIGN KEY (gItemID) REFERENCES globalItems (gItemID);
+ALTER TABLE characters ADD CONSTRAINT characterFK3 FOREIGN KEY (sessionID) REFERENCES sessions (sessionID);
+ALTER TABLE sessions ADD CONSTRAINT sessionFK1 FOREIGN KEY (characterID) REFERENCES characters (characterID);
+ALTER TABLE sessions ADD CONSTRAINT sessionFK2 FOREIGN KEY (tItemID) REFERENCES items (tItemID);
+ALTER TABLE globalItems ADD CONSTRAINT gItemFK1 FOREIGN KEY (characterID) REFERENCES characters (characterID);
+ALTER TABLE tempItems ADD CONSTRAINT tItemFK1 FOREIGN KEY (characterID) REFERENCES characters (characterID);
+
+--fill in default values
+ALTER TABLE characters MODIFY (name DEFAULT 'Neuer Charakter');
+ALTER TABLE sessions MODIFY (name DEFAULT 'Neue Spielsitzung');
+ALTER TABLE globalItems MODIFY (gItemValue DEFAULT 0);
+ALTER TABLE globalItems MODIFY (gItemName DEFAULT 'Wert');
+ALTER TABLE tempItems MODIFY (tItemValue DEFAULT 0);
+ALTER TABLE tempItems MODIFY (tItemName DEFAULT 'Wert');

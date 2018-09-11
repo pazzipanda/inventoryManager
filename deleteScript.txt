@@ -1,0 +1,36 @@
+--start by deleting data from tables with dependencies
+DELETE FROM globalItems;
+DELETE FROM temporaryItems;
+DELETE FROM sessions;
+DELETE FROM characters;
+
+--delete data from tables without dependencies
+DELETE FROM accounts;
+
+--drop all FKs 
+ALTER TABLE tempItems DROP CONSTRAINT tItemFK1;
+ALTER TABLE globalItems DROP CONSTRAINT gItemFK1;
+ALTER TABLE sessions DROP CONSTRAINT sessionFK2;
+ALTER TABLE sessions DROP CONSTRAINT sessionFK1;
+ALTER TABLE characters DROP CONSTRAINT characterFK3;
+ALTER TABLE characters DROP CONSTRAINT characterFK2;
+ALTER TABLE characters DROP CONSTRAINT characterFK1;
+
+--drop all Uniqe Constraints
+ALTER TABLE accounts DROP CONSTRAINT accountUnique;
+
+--drop all PKs
+ALTER TABLE globalItems DROP CONSTRAINT gItemsPK;
+ALTER TABLE tempItems DROP CONSTRAINT tItemsPK;
+ALTER TABLE sessions DROP CONSTRAINT sessionsPK;
+ALTER TABLE characters DROP CONSTRAINT charactersPK;
+ALTER TABLE accounts DROP CONSTRAINT accountsPK;
+
+--delete tables with dependencies
+DROP TABLE globalItems;
+DROP TABLE temporaryItems;
+DROP TABLE sessions;
+DROP TABLE characters;
+
+--delte tables without dependencies
+DROP TABLE accounts;
