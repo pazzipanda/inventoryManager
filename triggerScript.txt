@@ -12,14 +12,17 @@ end;
 
 --create trigger for inserting character
 
-CREATE OR REPLACE trigger NEWCHARACTER
+create or replace trigger NEWCHARACTER 
 	before insert on CHARACTERS
-	for each row
-begin
-	if :NEW.CHARACTERID is null then
-		select CHARACTERID_SEQUENCE.nextval into :NEW.CHARACTERID from dual;
+	for each row 
+begin 
+	if :NEW.CHARACTERID is null then 
+		select CHARACTERID_SEQUENCE.nextval into :NEW.CHARACTERID from dual; 
+	end if; 
+	if :NEW.ACCOUNTID is null then
+		select 1000 into :NEW.ACCOUNTID from dual;
 	end if;
-end;
+end; 
 /
 
 --create trigger for inserting session
@@ -31,10 +34,14 @@ begin
 	if :NEW.SESSIONID is null then
 		select SESSIONID_SEQUENCE.nextval into :NEW.SESSIONID from dual;
 	end if;
+	if :NEW.CHARACTERID is null then
+		select 1000 into :NEW.CHARACTERID from dual;
+	end if;
+
 end;
 /
 
---create trigger for inserting account
+--create trigger for inserting global item
 
 CREATE OR REPLACE trigger NEWGITEM
 	before insert on GLOBALITEMS
@@ -43,17 +50,23 @@ begin
 	if :NEW.GITEMID is null then
 		select GITEMID_SEQUENCE.nextval into :NEW.GITEMID from dual;
 	end if;
+	if :NEW.CHARACTERID is null then
+		select 1000 into :NEW.CHARACTERID from dual;
+	end if;
 end;
 /
 
---create trigger for inserting account
+--create trigger for inserting temporary item
 
-CREATE OR REPLACE trigger NEWACCOUNT
-	before insert on ACCOUNTS
+CREATE OR REPLACE trigger NEWTITEM
+	before insert on TEMPITEMS
 	for each row
 begin
-	if:NEW.ACCOUNTID is null then
-		select ACCOUNTID_SEQUENCE.nextval into :NEW.ACCOUNTID from dual;
+	if :NEW.TITEMID is null then
+		select TITEMID_SEQUENCE.nextval into :NEW.TITEMID from dual;
+	end if;
+	if :NEW.SESSIONID is null then
+		select 1000 into :NEW.SESSIONID from dual;
 	end if;
 end;
 /
